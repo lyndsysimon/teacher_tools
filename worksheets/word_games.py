@@ -2,6 +2,8 @@ from collections import namedtuple
 from datetime import datetime
 from random import SystemRandom
 
+from teacher_tools.worksheets import natural_random_letter
+
 # Custom, verbose type for a single grid element
 GridPoint = namedtuple(
     typename='GridPoint',
@@ -42,7 +44,7 @@ class WordGame(object):
             'definition': definition
         })
 
-    def create_scramble(self,rows=None,columns=None):
+    def _create_board(self,rows,columns,board_type):
 
         calculated_dimensions = int(max(
             [len(x['word']) for x in self.words]
@@ -53,7 +55,20 @@ class WordGame(object):
             cols=columns or calculated_dimensions,
             words=[x['word'] for x in self.words]
         )
-        return board.output_scramble()
+
+        if board_type == 'crossword':
+            return board.output_crossword()
+        elif board_type == 'scramble':
+            return board.output_scramble()
+        else:
+            raise NotImplementedError()
+
+    def create_crossword(self,rows=None,columns=None):
+        return self._create_board(rows,columns,board_type='crossword')
+
+    def create_scramble(self, rows=None,columns=None):
+        return self._create_board(rows,columns,board_type='scramble')
+
 
 
 class WordGameBoard(object):
@@ -73,11 +88,17 @@ class WordGameBoard(object):
             self._place_word(word)
 
     def output_scramble(self):
+        return self._output_board(fill=natural_random_letter)
+
+    def output_crossword(self):
+        return self._output_board(fill=' ')
+
+    def _output_board(self, fill=' '):
         grid = []
         for row in range(self.rows):
             grid.append([])
             for col in range(self.cols):
-                grid[row].append('-')
+                grid[row].append(fill() if callable(fill) else fill)
 
         filled = self._coords_filled()
         for (x,y) in filled:

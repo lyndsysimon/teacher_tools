@@ -36,8 +36,15 @@ class WordGameTest(unittest.TestCase):
     def test_create_scramble(self):
         game = WordGame(self.words)
         scramble = game.create_scramble()
-        for row in scramble:
-            print( ''.join(row) )
+        crossword = game.create_crossword()
+
+
+        # for row in scramble:
+        #     print( ''.join(row) )
+
+        #
+        # for row in crossword:
+        #     print( ''.join(row) )
 
 
 
