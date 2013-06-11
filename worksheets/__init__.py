@@ -43,7 +43,5 @@ def natural_random_letter():
     English language.
     '''
     return letter_frequency[
-        sorted(
-            [k for k in letter_frequency.keys() if k >= rng.randint(1,10000)]
-        )[0]
+        min([k for k in letter_frequency.keys() if k >= rng.randint(1,10000)])
     ]
