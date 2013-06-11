@@ -13,6 +13,10 @@ from teacher_tools.worksheets.word_games import WordGame
 class WordGameTest(unittest.TestCase):
     words = [
         'cat',
+        'coyote',
+        'fox',
+        'cow',
+        'turtle',
     ]
     def setUp(self):
         pass
@@ -30,10 +34,10 @@ class WordGameTest(unittest.TestCase):
         self.assertEqual(game.words[0]['word'], self.words[0])
 
     def test_create_scramble(self):
-        game = WordGame()
-        game.add_word(self.words[0])
-        self.assertEqual(len(game.words), 1)
+        game = WordGame(self.words)
         scramble = game.create_scramble()
+        for row in scramble:
+            print( ''.join(row) )
 
 
 
