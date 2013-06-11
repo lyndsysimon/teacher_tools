@@ -12,22 +12,30 @@ from teacher_tools.worksheets.word_games import WordGame
 
 class WordGameTest(unittest.TestCase):
     words = [
-        'penguin',
         'cat',
-        'lion',
-        'tiger',
-        'bear',
-        'anteater',
-        'aardvark',
-        'tiltawhirl'
-        'bird',
-        'party',
-        'queen',
-        'wandering',
     ]
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
 
     def test_create_game(self):
-        game = WordGame(self.words)
+        game = WordGame()
+
+    def test_add_word(self):
+        game = WordGame()
+        game.add_word(self.words[0])
+        self.assertEqual(len(game.words), 1)
+        self.assertEqual(game.words[0]['word'], self.words[0])
+
+    def test_create_scramble(self):
+        game = WordGame()
+        game.add_word(self.words[0])
+        self.assertEqual(len(game.words), 1)
+        scramble = game.create_scramble()
+
+
 
 if __name__ == '__main__':
     unittest.main()
